@@ -138,7 +138,7 @@ async function getUsers(
               tipo: "",
               parametro: "",
               codice: user.username,
-              testo: user.username.toUpperCase(),
+              testo: user.username,
             },
           },
           email: {
