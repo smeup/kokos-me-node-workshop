@@ -83,7 +83,12 @@ async function getUsers(
 
   const users: UserT[] = await fetchUsers();
 
+
   printer.writeColumns([
+    {
+      code: "id",
+      text: "Id",
+    },
     {
       code: "name",
       text: "Nome",
@@ -106,6 +111,16 @@ async function getUsers(
 
     printer.writeRow({
       fields: {
+        id: {
+          name: "id",
+          tooltip: false,
+          smeupObject: {
+            tipo: "",
+            parametro: "",
+            codice: user.id.toString(),
+            testo: user.id.toString(),
+          },
+        },
           name: {
             name: "name",
             tooltip: false,
