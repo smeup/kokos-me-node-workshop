@@ -8,11 +8,21 @@ import {
   } from "@sme.up/kokos-sdk-node";
 
 import axios from 'axios';
-import UserT from "interfaces/types";
+import UserT, { Image } from "interfaces/types";
   
 async function fetchUsers() {
   try {
     const response = await axios.get('https://jsonplaceholder.typicode.com/users'); 
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching data from API:', error);
+    throw error;
+  }
+}
+
+async function fetchImages() {
+  try {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/photos?albumId=1'); 
     return response.data;
   } catch (error) {
     console.error('Error fetching data from API:', error);
@@ -38,8 +48,31 @@ const JsonPlaceholderService: KokosService = {
   methods: {
     "GET.ALL": getUsers,
     "GET.USE": getUserDetail,
+    "GET.IMG": getImages,
   },
 };
+async function getImages(
+  _fun: Fun,
+  _context: ExecutionContext,
+  printer: SmeupDataStructureWriter
+) {
+
+  const images: Image[] = await fetchImages();
+
+
+  images.forEach(image => {
+
+    printer.writeTreeNode({
+      children: [],
+      content: {
+        tipo: "J4",
+        parametro: "IMG",
+        codice: "J1;URL;" + image.url,
+        testo: "",
+      },
+    });
+  });
+}
 
 async function getUsers(
   _fun: Fun,
@@ -70,7 +103,7 @@ async function getUsers(
   ]);
 
   users.forEach(user => {
-    console.log(user)
+
     printer.writeRow({
       fields: {
           name: {
@@ -131,7 +164,17 @@ async function getUserDetail(
   const inputMap: { [key: string]: string } = _fun.INPUT ? parseKeyValueBetweenBrackets(_fun.INPUT) : {};
   const userId = inputMap["USER_ID"]
   const user: UserT = await fetchUserById(userId);
-  console.log(user)
+
+  printer.writeTreeNode({
+    children: [],
+    content: {
+      tipo: "",
+      parametro: "",
+      codice: "",
+      testo: user['username'],
+    },
+  });
+  
 
   printer.writeTreeNode({
     children: [],
