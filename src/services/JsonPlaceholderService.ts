@@ -20,11 +20,11 @@ async function fetchUsers() {
 
 const JsonPlaceholderService: KokosService = {
   methods: {
-    "GET.TRE": getTree,
+    "GET.USE": getUsers,
   },
 };
 
-async function getTree(
+async function getUsers(
   _fun: Fun,
   _context: ExecutionContext,
   printer: SmeupDataStructureWriter
