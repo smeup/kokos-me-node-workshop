@@ -137,8 +137,8 @@ async function getUsers(
             smeupObject: {
               tipo: "",
               parametro: "",
-              codice: user.username,
-              testo: user.username,
+              codice: user.username ?? "",
+              testo: user.username ?? "",
             },
           },
           email: {
