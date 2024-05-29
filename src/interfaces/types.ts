@@ -17,7 +17,7 @@ export interface Address {
     bs: string;
   }
   
-  export interface User {
+  export default interface UserT {
     id: number;
     name: string;
     username: string;
