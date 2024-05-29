@@ -178,29 +178,30 @@ async function getUserDetail(
 
   const inputMap: { [key: string]: string } = _fun.INPUT ? parseKeyValueBetweenBrackets(_fun.INPUT) : {};
   const userId = inputMap["USER_ID"]
-  const user: UserT = await fetchUserById(userId);
+  if(userId !== undefined) {
+    const user: UserT = await fetchUserById(userId);
 
-  printer.writeTreeNode({
-    children: [],
-    content: {
-      tipo: "",
-      parametro: "",
-      codice: "",
-      testo: user['username'] ?? "",
-    },
-  });
-  
+    printer.writeTreeNode({
+      children: [],
+      content: {
+        tipo: "",
+        parametro: "",
+        codice: "",
+        testo: user['username'] ?? "",
+      },
+    });
+    
 
-  printer.writeTreeNode({
-    children: [],
-    content: {
-      tipo: "",
-      parametro: "",
-      codice: "",
-      testo: user['name'] ?? "",
-    },
-  });
-
+    printer.writeTreeNode({
+      children: [],
+      content: {
+        tipo: "",
+        parametro: "",
+        codice: "",
+        testo: user['name'] ?? "",
+      },
+    });
+  }
 }
 
 export default JsonPlaceholderService;
