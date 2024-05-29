@@ -186,7 +186,7 @@ async function getUserDetail(
       tipo: "",
       parametro: "",
       codice: "",
-      testo: user['username'],
+      testo: user['username'] ?? "",
     },
   });
   
@@ -197,7 +197,7 @@ async function getUserDetail(
       tipo: "",
       parametro: "",
       codice: "",
-      testo: user['name'],
+      testo: user['name'] ?? "",
     },
   });
 
