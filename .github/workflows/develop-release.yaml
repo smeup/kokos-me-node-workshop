@@ -14,3 +14,15 @@ jobs:
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  update-on-lab-environment:
+    needs: java-docker-release
+    runs-on: erbusco
+    steps:
+      - name: Update container on Kokos LAB (https://kokoslab.smeup.com)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.KOKOS_LAB_IP }}
+          username: smeup
+          password: ${{ secrets.LAB_SSH_PASSWORD }}
+          script: |
+            kubectl rollout restart deploy/me-node-workshop

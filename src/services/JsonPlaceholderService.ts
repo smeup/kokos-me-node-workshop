@@ -10,7 +10,7 @@ import axios from 'axios';
   
 async function fetchUsers() {
   try {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/users'); 
+    const response = await axios.get('https://jsonplaceholder.typicode.com/users?userId=1'); 
     return response.data;
   } catch (error) {
     console.error('Error fetching data from API:', error);
