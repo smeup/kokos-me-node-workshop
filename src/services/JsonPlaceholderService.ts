@@ -62,15 +62,10 @@ async function getImages(
   images.forEach(image => {
     let node: SmeupDataNode = {
       children: [],
-      cells: {
-        url: {
-          value: "",
-          obj: {
-            t: "J4",
-            p: "IMG",
-            k: "J1;URL;" + image.url,
-          },
-        }
+      obj: {
+        t: "J4",
+        p: "IMG",
+        k: "J1;URL;" + image.url,
       },
       value: ""
     };
@@ -151,11 +146,6 @@ async function getUserDetail(
     printer.writeDataNode({
       children: [],
       value: user['username'] ?? "",
-      obj: {
-        t: "",
-        p: "",
-        k: user['username'] ?? "",
-      },
     });
 
     printer.writeDataNode({
@@ -189,7 +179,7 @@ async function getUserDetail(
         children: [],
         value: user['company'].name ?? "",
     },
-  ],
+    ],
     value: "Company",
   });
 
