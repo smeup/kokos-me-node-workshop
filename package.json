@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sme.up/kokos-sdk-node": "^0.2.0-SNAPSHOT",
+    "@sme.up/kokos-sdk-node": "^0.3.0-SNAPSHOT",
     "axios": "^1.7.2"
   }
 }

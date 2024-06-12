@@ -2,6 +2,7 @@ import {
     ExecutionContext,
     Fun,
     KokosService,
+    SmeupDataNode,
     SmeupDataStructureWriter,    
     parseKeyValueBetweenBrackets,
   } from "@sme.up/kokos-sdk-node";
@@ -59,16 +60,22 @@ async function getImages(
 
 
   images.forEach(image => {
-
-    printer.writeTreeNode({
+    let node: SmeupDataNode = {
       children: [],
-      content: {
-        tipo: "J4",
-        parametro: "IMG",
-        codice: "J1;URL;" + image.url,
-        testo: "",
+      cells: {
+        url: {
+          value: "",
+          obj: {
+            t: "J4",
+            p: "IMG",
+            k: "J1;URL;" + image.url,
+          },
+        }
       },
-    });
+      value: ""
+    };
+
+    printer.writeDataNode(node);
   });
 }
 
@@ -82,91 +89,52 @@ async function getUsers(
   const users: UserT[] = await fetchUsers();
 
 
-  printer.writeColumns([
+  printer.writeDataColumns([
     {
-      code: "id",
-      text: "Id",
+      name: "id",
+      title: "Id",
     },
     {
-      code: "name",
-      text: "Nome",
+      name: "name",
+      title: "Nome",
     },
     {
-      code: "username",
-      text: "Username",
+      name: "username",
+      title: "Username",
     },
     {
-      code: "email",
-      text: "Email",
+      name: "email",
+      title: "Email",
     },
     {
-      code: "phone",
-      text: "Telefono",
+      name: "phone",
+      title: "Telefono",
     },
   ]);
 
   users.forEach(user => {
 
-    printer.writeRow({
-      fields: {
+    printer.writeDataRow({
+      cells: {
         id: {
-          name: "id",
-          tooltip: false,
-          smeupObject: {
-            tipo: "",
-            parametro: "",
-            codice: user.id.toString(),
-            testo: user.id.toString(),
-          },
+          value: user.id.toString(),
         },
           name: {
-            name: "name",
-            tooltip: false,
-            smeupObject: {
-              tipo: "",
-              parametro: "",
-              codice: user.name,
-              testo: user.name,
-            },
+            value: user.name,
           },
           username: {
-            name: "username",
-            tooltip: false,
-            smeupObject: {
-              tipo: "",
-              parametro: "",
-              codice: user.username ?? "",
-              testo: user.username ?? "",
-            },
+            value: user.username ?? "",
           },
           email: {
-            name: "email",
-            tooltip: false,
-            smeupObject: {
-              tipo: "",
-              parametro: "",
-              codice: user.email,
-              testo: user.email,
-            },
+            value: user.email,
           },
           phone: {
-            name: "phone",
-            tooltip: false,
-            smeupObject: {
-              tipo: "",
-              parametro: "",
-              codice: user.phone,
-              testo: user.phone,
-            },
+            value: user.phone,
           },
         },
       });
   });
-
-
 }
-
-
 
 async function getUserDetail(
   _fun: Fun,
@@ -180,90 +148,52 @@ async function getUserDetail(
   if(userId !== undefined) {
     const user: UserT = await fetchUserById(userId);
 
-    printer.writeTreeNode({
+    printer.writeDataNode({
       children: [],
-      content: {
-        tipo: "",
-        parametro: "",
-        codice: "",
-        testo: user['username'] ?? "",
+      value: user['username'] ?? "",
+      obj: {
+        t: "",
+        p: "",
+        k: user['username'] ?? "",
       },
     });
 
-    printer.writeTreeNode({
+    printer.writeDataNode({
       children: [
           {
             children: [],
-            content: {
-              tipo: "",
-              parametro: "",
-              codice: "",
-              testo: user['address'].street ?? "",
-            },
+            value: user['address'].street ?? "",
         },
         {
           children: [],
-          content: {
-            tipo: "",
-            parametro: "",
-            codice: "",
-            testo: user['address'].city ?? "",
-          },
+          value: user['address'].city ?? "",
       }
       ],
-      content: {
-        tipo: "",
-        parametro: "",
-        codice: "",
-        testo: "Address",
-      },
+      value: "Address",
     });
     
 
-    printer.writeTreeNode({
+  printer.writeDataNode({
       children: [],
-      content: {
-        tipo: "",
-        parametro: "",
-        codice: "",
-        testo: user['name'] ?? "",
-      },
+      value: user['name'] ?? "",
     });
 
-  
-  printer.writeTreeNode({
+  printer.writeDataNode({
     children: [],
-    content: {
-      tipo: "",
-      parametro: "",
-      codice: "",
-      testo: user['phone'] ?? "",
-    },
+    value: user['phone'] ?? "",
   });
 
-    
-  printer.writeTreeNode({
+  printer.writeDataNode({
     children: [
       {
         children: [],
-        content: {
-          tipo: "",
-          parametro: "",
-          codice: "",
-          testo: user['company'].name ?? "",
-        },
+        value: user['company'].name ?? "",
     },
   ],
-    content: {
-      tipo: "",
-      parametro: "",
-      codice: "",
-      testo: "Company",
-    },
+    value: "Company",
   });
 
-}
-
+  }
 }
 
 export default JsonPlaceholderService;
