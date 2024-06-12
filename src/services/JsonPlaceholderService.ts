@@ -2,8 +2,7 @@ import {
     ExecutionContext,
     Fun,
     KokosService,
-    SmeupDataStructureWriter,
-    User,
+    SmeupDataStructureWriter,    
     parseKeyValueBetweenBrackets,
   } from "@sme.up/kokos-sdk-node";
 
@@ -35,7 +34,6 @@ async function fetchUserById(id: string) {
     const url = 'https://jsonplaceholder.typicode.com/users?id=' + id;
     const response = await axios.get(url); 
 
-
     return response.data[0];
   } catch (error) {
     console.error('Error fetching data from API:', error);
@@ -51,12 +49,12 @@ const JsonPlaceholderService: KokosService = {
     "GET.IMG": getImages,
   },
 };
+
 async function getImages(
   _fun: Fun,
   _context: ExecutionContext,
   printer: SmeupDataStructureWriter
 ) {
-
   const images: Image[] = await fetchImages();
 
 
@@ -178,6 +176,7 @@ async function getUserDetail(
 
   const inputMap: { [key: string]: string } = _fun.INPUT ? parseKeyValueBetweenBrackets(_fun.INPUT) : {};
   const userId = inputMap["USER_ID"]
+
   if(userId !== undefined) {
     const user: UserT = await fetchUserById(userId);
 
@@ -188,6 +187,35 @@ async function getUserDetail(
         parametro: "",
         codice: "",
         testo: user['username'] ?? "",
+      },
+    });
+
+    printer.writeTreeNode({
+      children: [
+          {
+            children: [],
+            content: {
+              tipo: "",
+              parametro: "",
+              codice: "",
+              testo: user['address'].street ?? "",
+            },
+        },
+        {
+          children: [],
+          content: {
+            tipo: "",
+            parametro: "",
+            codice: "",
+            testo: user['address'].city ?? "",
+          },
+      }
+      ],
+      content: {
+        tipo: "",
+        parametro: "",
+        codice: "",
+        testo: "Address",
       },
     });
     
@@ -201,7 +229,41 @@ async function getUserDetail(
         testo: user['name'] ?? "",
       },
     });
-  }
+
+  
+  printer.writeTreeNode({
+    children: [],
+    content: {
+      tipo: "",
+      parametro: "",
+      codice: "",
+      testo: user['phone'] ?? "",
+    },
+  });
+
+    
+  printer.writeTreeNode({
+    children: [
+      {
+        children: [],
+        content: {
+          tipo: "",
+          parametro: "",
+          codice: "",
+          testo: user['company'].name ?? "",
+        },
+    },
+  ],
+    content: {
+      tipo: "",
+      parametro: "",
+      codice: "",
+      testo: "Company",
+    },
+  });
+
+}
+
 }
 
 export default JsonPlaceholderService;
