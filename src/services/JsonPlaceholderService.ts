@@ -46,7 +46,7 @@ async function fetchUserById(id: string) {
 const JsonPlaceholderService: KokosService = {
   methods: {
     "GET.ALL": getUsers,
-    "GET.USE": getUserDetail,
+    "USR.INF": getUserDetail,
     "GET.IMG": getImages,
   },
 };
@@ -138,7 +138,7 @@ async function getUserDetail(
 ) {
 
   const inputMap: { [key: string]: string } = _fun.INPUT ? parseKeyValueBetweenBrackets(_fun.INPUT) : {};
-  const userId = inputMap["USER_ID"]
+  const userId = inputMap["USR"]
 
   if(userId !== undefined) {
     const user: UserT = await fetchUserById(userId);
