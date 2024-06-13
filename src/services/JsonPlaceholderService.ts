@@ -146,30 +146,60 @@ async function getUserDetail(
     printer.writeDataNode({
       children: [],
       value: user['username'] ?? "",
+      obj: {
+        t: "",
+        p: "",
+        k: user['username'] ?? "",
+      },
     });
 
     printer.writeDataNode({
       children: [
           {
             children: [],
+            obj: {
+              t: "",
+              p: "",
+              k: user['address'].street ?? "",
+            },
             value: user['address'].street ?? "",
         },
         {
           children: [],
+          obj: {
+            t: "",
+            p: "",
+            k: user['address'].city ?? "",
+          },
           value: user['address'].city ?? "",
       }
       ],
+      obj: {
+        t: "",
+        p: "",
+        k: "Address"
+      },
       value: "Address",
     });
     
 
   printer.writeDataNode({
       children: [],
+      obj: {
+        t: "",
+        p: "",
+        k: user['name'] ?? "",
+      },
       value: user['name'] ?? "",
     });
 
   printer.writeDataNode({
     children: [],
+    obj: {
+      t: "",
+      p: "",
+      k: user['phone'] ?? "",
+    },
     value: user['phone'] ?? "",
   });
 
@@ -177,9 +207,19 @@ async function getUserDetail(
     children: [
       {
         children: [],
+        obj: {
+          t: "",
+          p: "",
+          k: user['company'].name ?? "",
+        },
         value: user['company'].name ?? "",
     },
     ],
+    obj: {
+      t: "",
+      p: "",
+      k: "Company",
+    },
     value: "Company",
   });
 
